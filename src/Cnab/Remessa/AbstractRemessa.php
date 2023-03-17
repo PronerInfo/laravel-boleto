@@ -146,6 +146,13 @@ abstract class AbstractRemessa
     protected $identificacaoEmissao;
 
     /**
+     * Número de controle da empresa
+     *
+     * @var string
+     */
+    protected $numeroControle;
+
+    /**
      * Identificação da distribuição
      *
      * @var string
@@ -259,6 +266,26 @@ abstract class AbstractRemessa
     public function setIdremessa($idremessa)
     {
         $this->idremessa = $idremessa;
+
+        return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNumeroControle()
+    {
+        return $this->numeroControle;
+    }
+
+    /**
+     * @param mixed $numeroControle
+     *
+     * @return AbstractRemessa
+     */
+    public function setNumeroControle($numeroControle)
+    {
+        $this->numeroControle = $numeroControle;
 
         return $this;
     }
