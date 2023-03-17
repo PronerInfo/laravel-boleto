@@ -132,11 +132,11 @@ abstract class AbstractRemessa
     protected $carteiras = [];
 
     /**
-     * Nosso Numero
+     * Banco emite nosso número
      *
      * @var string
      */
-    protected $nossoNumero;
+    protected $bancoEmiteNossoNumero;
 
     /**
      * Identificação da emissão
@@ -429,25 +429,25 @@ abstract class AbstractRemessa
     }
 
     /**
-     * Retorna o nosso numero informado
+     * Retorna banco emite nosso numero
      *
      * @return string
      */
-    public function getNossoNumero()
+    public function getBancoEmiteNossoNumero()
     {
-        return $this->nossoNumero;
+        return $this->bancoEmiteNossoNumero;
     }
 
     /**
-     * Seta o nosso numero informado
+     * Seta banco emite nosso numero
      *
-     * @param string $nossoNumero
+     * @param string $bancoEmiteNossoNumero
      *
      * @return AbstractRemessa
      */
-    public function setNossoNumero($nossoNumero)
+    public function setBancoEmiteNossoNumero($bancoEmiteNossoNumero)
     {
-        $this->nossoNumero = $nossoNumero;
+        $this->bancoEmiteNossoNumero = $bancoEmiteNossoNumero;
 
         return $this;
     }
