@@ -77,6 +77,13 @@ class Bb extends AbstractRemessa implements RemessaContract
     protected $variacaoCarteira;
 
     /**
+     * Variação da carteira
+     *
+     * @var string
+     */
+    protected $identificacaoDistribuicao;
+
+    /**
      * @return mixed
      */
     public function getConvenio()
@@ -141,6 +148,30 @@ class Bb extends AbstractRemessa implements RemessaContract
     }
 
     /**
+     * Retorna identificação da distribuição. Campo C010 da Febraban.
+     *
+     * @return string
+     */
+    public function getIdentificacaoDistribuicao()
+    {
+        return $this->identificacaoDistribuicao;
+    }
+
+    /**
+     * Seta a identificação da distribuição. Campo C010 da Febraban.
+     *
+     * @param string $identificacaoDistribuicao
+     *
+     * @return Bb
+     */
+    public function setIdentificacaoDistribuicao($identificacaoDistribuicao)
+    {
+        $this->identificacaoDistribuicao = $identificacaoDistribuicao;
+
+        return $this;
+    }
+
+    /**
      * @param BoletoContract $boleto
      *
      * @return $this
@@ -196,7 +227,7 @@ class Bb extends AbstractRemessa implements RemessaContract
         $this->add(59, 59, '');
         $this->add(60, 60, '');
         $this->add(61, 61, '');
-        $this->add(62, 62, $boleto->getIdDistribuicao() != 0 ? $boleto->getIdDistribuicao() : '0');
+        $this->add(62, 62, Util::formatCnab('9', !empty($this->getIdentificacaoDistribuicao()) ? $this->getIdentificacaoDistribuicao() : '0', 1));
         $this->add(63, 77, Util::formatCnab('9', $boleto->getNumeroDocumento(), 15)); //valor do número do documento
         $this->add(78, 85, $boleto->getDataVencimento()->format('dmY'));
         $this->add(86, 100, Util::formatCnab('9', $boleto->getValor(), 15, 2));

@@ -270,11 +270,6 @@ interface Boleto
     /**
      * @return mixed
      */
-    public function getIdDistribuicao();
-
-    /**
-     * @return mixed
-     */
     public function alterarBoleto();
 
     /**

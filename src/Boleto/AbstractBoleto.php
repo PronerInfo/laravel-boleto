@@ -350,14 +350,6 @@ abstract class AbstractBoleto implements BoletoContract
     private $pixQrCode = null;
 
     /**
-     *
-     * Recebe a identificação da distribuição do boleto
-     *
-     * @var ?string
-     */
-    private $idDistribuicao = null;
-
-    /**
      * AbstractBoleto constructor.
      *
      * @param array $params
@@ -1702,22 +1694,6 @@ abstract class AbstractBoleto implements BoletoContract
     }
 
     /**
-     * @return ?string
-     */
-    public function getIdDistribuicao(): ?string
-    {
-        return $this->idDistribuicao;
-    }
-
-    /**
-     * @return ?string
-     */
-    public function setIdDistribuicao(string $idDistribuicao): void
-    {
-        $this->idDistribuicao = $idDistribuicao;
-    }
-
-    /**
      * @param $situacao
      *
      * @return bool
@@ -1921,7 +1897,6 @@ abstract class AbstractBoleto implements BoletoContract
                 'carteira_nome' => $this->getCarteiraNome(),
                 'uso_banco' => $this->getUsoBanco(),
                 'status' => $this->getStatus(),
-                'id_distribuicao' => $this->getIdDistribuicao(),
                 'mostrar_endereco_ficha_compensacao' => $this->getMostrarEnderecoFichaCompensacao(),
                 'pix_qrcode' => $this->getPixQrCode(),
             ], $this->variaveis_adicionais
