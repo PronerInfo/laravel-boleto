@@ -77,20 +77,6 @@ class Bb extends AbstractRemessa implements RemessaContract
     protected $variacaoCarteira;
 
     /**
-     * Identificação da emissão
-     *
-     * @var string
-     */
-    protected $identificacaoEmissao;
-
-    /**
-     * Identificação da distribuição
-     *
-     * @var string
-     */
-    protected $identificacaoDistribuicao;
-
-    /**
      * @return mixed
      */
     public function getConvenio()
@@ -155,54 +141,6 @@ class Bb extends AbstractRemessa implements RemessaContract
     }
 
     /**
-     * Retorna a identificação da emissão do boleto de pagamento. Campo C009 da Febraban.
-     *
-     * @return string
-     */
-    public function getIdentificacaoEmissao()
-    {
-        return $this->identificacaoEmissao;
-    }
-
-    /**
-     * Seta a identificação da emissão do boleto de pagamento. Campo C009 da Febraban.
-     *
-     * @param string $identificacaoEmissao
-     *
-     * @return Bb
-     */
-    public function setIdentificacaoEmissao($identificacaoEmissao)
-    {
-        $this->identificacaoEmissao = $identificacaoEmissao;
-
-        return $this;
-    }
-
-    /**
-     * Retorna a identificação da distribuição. Campo C010 da Febraban.
-     *
-     * @return string
-     */
-    public function getIdentificacaoDistribuicao()
-    {
-        return $this->identificacaoDistribuicao;
-    }
-
-    /**
-     * Seta a identificação da distribuição. Campo C010 da Febraban.
-     *
-     * @param string $identificacaoDistribuicao
-     *
-     * @return Bb
-     */
-    public function setIdentificacaoDistribuicao($identificacaoDistribuicao)
-    {
-        $this->identificacaoDistribuicao = $identificacaoDistribuicao;
-
-        return $this;
-    }
-
-    /**
      * @param BoletoContract $boleto
      *
      * @return $this
@@ -253,7 +191,7 @@ class Bb extends AbstractRemessa implements RemessaContract
         $this->add(24, 35, Util::formatCnab('9', $this->getConta(), 12));
         $this->add(36, 36, CalculoDV::bbContaCorrente($this->getConta()));
         $this->add(37, 37, '');
-        $this->add(38, 57, Util::formatCnab('X', $this->nossoNumero($boleto), 20));
+        $this->add(38, 57, Util::formatCnab('X', empty($this->getNossoNumero()) ? $this->getNossoNumero() : $this->nossoNumero($boleto), 20));
         $this->add(58, 58, '1'); //'1' = Cobrança Simples
         $this->add(59, 59, '');
         $this->add(60, 60, '');

@@ -132,6 +132,27 @@ abstract class AbstractRemessa
     protected $carteiras = [];
 
     /**
+     * Nosso Numero
+     *
+     * @var string
+     */
+    protected $nossoNumero;
+
+    /**
+     * Identificação da emissão
+     *
+     * @var string
+     */
+    protected $identificacaoEmissao;
+
+    /**
+     * Identificação da distribuição
+     *
+     * @var string
+     */
+    protected $identificacaoDistribuicao;
+
+    /**
      * Entidade beneficiario (quem esta gerando a remessa)
      *
      * @var PessoaContract
@@ -405,6 +426,78 @@ abstract class AbstractRemessa
     public function getCarteiras()
     {
         return $this->carteiras;
+    }
+
+    /**
+     * Retorna o nosso numero informado
+     *
+     * @return string
+     */
+    public function getNossoNumero()
+    {
+        return $this->nossoNumero;
+    }
+
+    /**
+     * Seta o nosso numero informado
+     *
+     * @param string $nossoNumero
+     *
+     * @return AbstractRemessa
+     */
+    public function setNossoNumero($nossoNumero)
+    {
+        $this->nossoNumero = $nossoNumero;
+
+        return $this;
+    }
+
+    /**
+     * Retorna a identificação da emissão do boleto de pagamento. Campo C009 da Febraban.
+     *
+     * @return string
+     */
+    public function getIdentificacaoEmissao()
+    {
+        return $this->identificacaoEmissao;
+    }
+
+    /**
+     * Seta a identificação da emissão do boleto de pagamento. Campo C009 da Febraban.
+     *
+     * @param string $identificacaoEmissao
+     *
+     * @return AbstractRemessa
+     */
+    public function setIdentificacaoEmissao($identificacaoEmissao)
+    {
+        $this->identificacaoEmissao = $identificacaoEmissao;
+
+        return $this;
+    }
+
+    /**
+     * Retorna a identificação da distribuição. Campo C010 da Febraban.
+     *
+     * @return string
+     */
+    public function getIdentificacaoDistribuicao()
+    {
+        return $this->identificacaoDistribuicao;
+    }
+
+    /**
+     * Seta a identificação da distribuição. Campo C010 da Febraban.
+     *
+     * @param string $identificacaoDistribuicao
+     *
+     * @return AbstractRemessa
+     */
+    public function setIdentificacaoDistribuicao($identificacaoDistribuicao)
+    {
+        $this->identificacaoDistribuicao = $identificacaoDistribuicao;
+
+        return $this;
     }
 
     /**
