@@ -155,7 +155,7 @@ class Pdf extends AbstractPdf implements PdfContract
         $this->Cell(35, $this->cell, $this->_($this->boleto[$i]->getAgenciaCodigoBeneficiario()), 'R');
         $this->Cell(10, $this->cell, $this->_('R$'), 'R');
         $this->Cell(15, $this->cell, $this->_(''), 'R');
-        $this->Cell(35, $this->cell, $this->_($this->boleto[$i]->getNossoNumeroBoleto()), 'R', 1, 'R');
+        $this->Cell(35, $this->cell, $this->_(!empty($this->boleto[$i]->getNossoNumero()) ? $this->boleto[$i]->getNossoNumero() : $this->boleto[$i]->getNossoNumeroBoleto()), 'R', 1, 'R');
 
         $this->SetFont($this->PadraoFont, '', $this->fdes);
         $this->Cell(50, $this->desc, $this->_('Número do Documento'), 'TLR');
@@ -259,7 +259,7 @@ class Pdf extends AbstractPdf implements PdfContract
         $this->Cell(15, $this->cell, $this->_($this->boleto[$i]->getEspecieDoc()), 'R');
         $this->Cell(10, $this->cell, $this->_($this->boleto[$i]->getAceite()), 'R');
         $this->Cell(25, $this->cell, $this->_($this->boleto[$i]->getDataProcessamento()->format('d/m/Y')), 'R');
-        $this->Cell(50, $this->cell, $this->_($this->boleto[$i]->getNossoNumeroBoleto()), 'R', 1, 'R');
+        $this->Cell(50, $this->cell, $this->_(!empty($this->boleto[$i]->getNossoNumero()) ? $this->boleto[$i]->getNossoNumero() : $this->boleto[$i]->getNossoNumeroBoleto()), 'R', 1, 'R');
 
         $this->SetFont($this->PadraoFont, '', $this->fdes);
 
@@ -496,7 +496,7 @@ class Pdf extends AbstractPdf implements PdfContract
         if ($nameFile == null) {
             $nameFile = Str::random(32);
         }
-        
+
         return $this->Output($nameFile . '.pdf', $dest, $this->print);
     }
 

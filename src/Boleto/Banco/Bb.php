@@ -183,7 +183,7 @@ class Bb extends AbstractBoleto implements BoletoContract
             return $this->campoLivre;
         }
         $length = strlen($this->getConvenio());
-        $nossoNumero = $this->gerarNossoNumero();
+        $nossoNumero = !empty($this->campoNossoNumero) ? $this->campoNossoNumero : $this->gerarNossoNumero();
         if (strlen($this->getNumero()) > 10) {
             if ($length == 6 && in_array($this->getCarteira(), ['16', '18']) && Util::numberFormatGeral($this->getVariacaoCarteira(), 3) == '017') {
                 return $this->campoLivre = Util::numberFormatGeral($this->getConvenio(), 6) . $nossoNumero . '21';
