@@ -372,6 +372,7 @@ class Bb extends AbstractRetorno implements RetornoCnab240
             'protestados' => 0,
             'erros' => 0,
             'alterados' => 0,
+            'custas' => 0,
         ];
     }
 
