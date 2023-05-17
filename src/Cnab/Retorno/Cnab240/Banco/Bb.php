@@ -71,6 +71,7 @@ class Bb extends AbstractRetorno implements RetornoCnab240
         '35' => 'Liquidado Correspondente em Dinheiro',
         '36' => 'Liquidado Correspondente em Cheque',
         '37' => 'Liquidado por meio de Central de Atendimento (Telefone)',
+        '61' => 'Liquidado via Pix',
         '09' => 'Comandada Banco',
         '10' => 'Comandada Cliente Arquivo',
         '11' => 'Comandada Cliente On-line',
@@ -85,7 +86,7 @@ class Bb extends AbstractRetorno implements RetornoCnab240
      *
      * @var array
      */
-    private $rejeicoes = [
+    private $ocorrencias_descricao = [
         '01' => 'Código do Banco Inválido',
         '02' => 'Código do Registro Detalhe Inválido',
         '03' => 'Código do Segmento Inválido',
@@ -199,6 +200,164 @@ class Bb extends AbstractRetorno implements RetornoCnab240
         'B3' => 'Tipo de Pagamento Inválido',
         'B4' => 'Valor Máximo/Percentual Inválido',
         'B5' => 'Valor Mínimo/Percentual Inválido',
+        'P1' => 'Registrado com QR Code Pix',
+        'P2' => 'Registrado sem QR Code Pix',
+        'P3' => 'Chave PIX – chave invalida',
+        'P4' => 'Chave PIX – sem cadastro na DICT',
+        'P5' => 'Chave PIX – não é compatível com o CNPJ',
+        'P6' => 'Identificador (TXID) – em duplicidade',
+        'P7' => 'Identificador (TXID) – inválido ou não encontrado',
+        'P8' => 'Ocorrência – alterar QR Code – alteração não permitida – QR Code concluído, removido pelo PSP ou removido pelo usuário recebedor',
+        'P9' => 'Ocorrência – cancela QR Code – cancelamento não permitido – QR Code concluído, removido pelo PSP ou removido pelo usuário recebedor',
+    ];
+
+    /**
+     * Array com as possiveis rejeicoes do banco.
+     *
+     * @var array
+     */
+    private $ocorrencias_liquidacao_baixa = [
+        '01' => 'Código do Banco Inválido',
+        '02' => 'Código do Registro Detalhe Inválido',
+        '03' => 'Código do Segmento Inválido',
+        '04' => 'Código de Movimento Não Permitido para Carteira',
+        '05' => 'Código de Movimento Inválido',
+        '06' => 'Tipo/Número de Inscrição do Beneficiário Inválidos',
+        '07' => 'Agência/Conta/DV Inválido',
+        '08' => 'Nosso Número Inválido',
+        '09' => 'Nosso Número Duplicado',
+        '10' => 'Carteira Inválida',
+        '11' => 'Forma de Cadastramento do Título Inválido',
+        '12' => 'Tipo de Documento Inválido',
+        '13' => 'Identificação da Emissão do Boleto de Pagamento Inválida',
+        '14' => 'Identificação da Distribuição do Boleto de Pagamento Inválida',
+        '15' => 'Características da Cobrança Incompatíveis',
+        '16' => 'Data de Vencimento Inválida',
+        '17' => 'Data de Vencimento Anterior a Data de Emissão',
+        '18' => 'Vencimento Fora do Prazo de Operação',
+        '19' => 'Título a Cargo de Bancos Correspondentes com Vencimento Inferior a XX Dias',
+        '20' => 'Valor do Título Inválido',
+        '21' => 'Espécie do Título Inválida',
+        '22' => 'Espécie do Título Não Permitida para a Carteira',
+        '23' => 'Aceite Inválido',
+        '24' => 'Data da Emissão Inválida',
+        '25' => 'Data da Emissão Posterior a Data de Entrada',
+        '26' => 'Código de Juros de Mora Inválido',
+        '27' => 'Valor/Taxa de Juros de Mora Inválido',
+        '28' => 'Código do Desconto Inválido',
+        '29' => 'Valor do Desconto Maior ou Igual ao Valor do Título',
+        '30' => 'Desconto a Conceder Não Confere',
+        '31' => 'Concessão de Desconto - Já Existe Desconto Anterior',
+        '32' => 'Valor do IOF Inválido',
+        '33' => 'Valor do Abatimento Inválido',
+        '34' => 'Valor do Abatimento Maior ou Igual ao Valor do Título',
+        '35' => 'Valor a Conceder Não Confere',
+        '36' => 'Concessão de Abatimento - Já Existe Abatimento Anterior',
+        '37' => 'Código para Protesto Inválido',
+        '38' => 'Prazo para Protesto Inválido',
+        '39' => 'Pedido de Protesto Não Permitido para o Título',
+        '40' => 'Título com Ordem de Protesto Emitida',
+        '41' => 'Pedido de Cancelamento/Sustação para Títulos sem Instrução de Protesto',
+        '42' => 'Código para Baixa/Devolução Inválido',
+        '43' => 'Prazo para Baixa/Devolução Inválido',
+        '44' => 'Código da Moeda Inválido',
+        '45' => 'Nome do Pagador Não Informado',
+        '46' => 'Tipo/Número de Inscrição do Pagador Inválidos',
+        '47' => 'Endereço do Pagador Não Informado',
+        '48' => 'CEP Inválido',
+        '49' => 'CEP Sem Praça de Cobrança (Não Localizado)',
+        '50' => 'CEP Referente a um Banco Correspondente',
+        '51' => 'CEP incompatível com a Unidade da Federação',
+        '52' => 'Registro de Título já liquidado Cart. 17',
+        '53' => 'Tipo/Número de Inscrição do Sacador/Avalista Inválidos',
+        '54' => 'Sacador/Avalista Não Informado',
+        '55' => 'Nosso número no Banco Correspondente Não Informado',
+        '56' => 'Código do Banco Correspondente Não Informado',
+        '57' => 'Código da Multa Inválido',
+        '58' => 'Data da Multa Inválida',
+        '59' => 'Valor/Percentual da Multa Inválido',
+        '60' => 'Movimento para Título Não Cadastrado',
+        '61' => 'Alteração da Agência Cobradora/DV Inválida',
+        '62' => 'Tipo de Impressão Inválido',
+        '63' => 'Entrada para Título já Cadastrado',
+        '64' => 'Número da Linha Inválido',
+        '65' => 'Código do Banco para Débito Inválido',
+        '66' => 'Agência/Conta/DV para Débito Inválido',
+        '67' => 'Dados para Débito incompatível com a Identificação da Emissão do Boleto de Pagamento',
+        '68' => 'Débito Automático Agendado',
+        '69' => 'Débito Não Agendado - Erro nos Dados da Remessa',
+        '70' => 'Débito Não Agendado - Pagador Não Consta do Cadastro de Autorizante',
+        '71' => 'Débito Não Agendado - Beneficiário Não Autorizado pelo Pagador',
+        '72' => 'Débito Não Agendado - Beneficiário Não Participa da Modalidade Débito Automático',
+        '73' => 'Débito Não Agendado - Código de Moeda Diferente de Real (R$)',
+        '74' => 'Débito Não Agendado - Data Vencimento Inválida',
+        '75' => 'Débito Não Agendado, Conforme seu Pedido, Título Não Registrado',
+        '76' => 'Débito Não Agendado, Tipo/Num. Inscrição do Debitado, Inválido',
+        '77' => 'Transferência para Desconto Não Permitida para a Carteira do Título',
+        '78' => 'Data Inferior ou Igual ao Vencimento para Débito Automático',
+        '79' => 'Data Juros de Mora Inválido',
+        '80' => 'Data do Desconto Inválida',
+        '81' => 'Tentativas de Débito Esgotadas - Baixado',
+        '82' => 'Tentativas de Débito Esgotadas - Pendente',
+        '83' => 'Limite Excedido',
+        '84' => 'Número Autorização Inexistente',
+        '85' => 'Título com Pagamento Vinculado',
+        '86' => 'Seu Número Inválido',
+        '87' => 'e-mail/SMS enviado',
+        '88' => 'e-mail Lido',
+        '89' => 'e-mail/SMS devolvido - endereço de e-mail ou número do celular incorreto',
+        '90' => 'e-mail devolvido - caixa postal cheia',
+        '91' => 'e-mail/número do celular do Pagador não informado',
+        '92' => 'Pagador optante por Boleto de Pagamento Eletrônico - e-mail não enviado',
+        '93' => 'Código para emissão de Boleto de Pagamento não permite envio de e-mail',
+        '94' => 'Código da Carteira inválido para envio e-mail.',
+        '95' => 'Contrato não permite o envio de e-mail',
+        '96' => 'Número de contrato inválido',
+        '97' => 'Rejeição da alteração do prazo limite de recebimento (a data deve ser informada no campo 28.3.p)',
+        '98' => 'Rejeição de dispensa de prazo limite de recebimento',
+        '99' => 'Rejeição da alteração do número do título dado pelo Beneficiário',
+        'A1' => 'Rejeição da alteração do número controle do participante',
+        'A2' => 'Rejeição da alteração dos dados do Pagador',
+        'A3' => 'Rejeição da alteração dos dados do Sacador/avalista',
+        'A4' => 'Pagador DDA',
+        'A5' => 'Registro Rejeitado – Título já Liquidado',
+        'A6' => 'Código do Convenente Inválido ou Encerrado',
+        'A7' => 'Título já se encontra na situação Pretendida',
+        'A8' => 'Valor do Abatimento inválido para cancelamento',
+        'A9' => 'Não autoriza pagamento parcial',
+        'B1' => 'Autoriza recebimento parcial',
+        'B2' => 'Valor Nominal do Título Conflitante',
+        'B3' => 'Tipo de Pagamento Inválido',
+        'B4' => 'Valor Máximo/Percentual Inválido',
+        'B5' => 'Valor Mínimo/Percentual Inválido',
+    ];
+
+    /**
+     * Array com as possiveis rejeicoes do banco.
+     *
+     * @var array
+     */
+    private $ocorrencias_tarifas_custas = [
+        '01' => 'Tarifa de Extrato de Posição',
+        '02' => 'Tarifa de Manutenção de Título Vencido',
+        '03' => 'Tarifa de Sustação',
+        '04' => 'Tarifa de Protesto',
+        '05' => 'Tarifa de Outras Instruções',
+        '06' => 'Tarifa de Outras Ocorrências',
+        '07' => 'Tarifa de Envio de Duplicata ao Pagador',
+        '08' => 'Custas de Protesto',
+        '09' => 'Custas de Sustação de Protesto',
+        '10' => 'Custas de Cartório Distribuidor',
+        '11' => 'Custas de Edital',
+        '12' => 'Tarifa Sobre Devolução de Título Vencido',
+        '13' => 'Tarifa Sobre Registro Cobrada na Baixa/Liquidação',
+        '14' => 'Tarifa Sobre Reapresentação Automática',
+        '15' => 'Tarifa Sobre Rateio de Crédito',
+        '16' => 'Tarifa Sobre Informações Via Fax',
+        '17' => 'Tarifa Sobre Prorrogação de Vencimento',
+        '18' => 'Tarifa Sobre Alteração de Abatimento/Desconto',
+        '19' => 'Tarifa Sobre Arquivo mensal (Em Ser)',
+        '20' => 'Tarifa Sobre Emissão de Boleto de Pagamento Pré-Emitido pelo Banco',
     ];
 
     /**
@@ -321,16 +480,25 @@ class Bb extends AbstractRetorno implements RetornoCnab240
                 if(array_search('a4', array_map('strtolower', $msgAdicional)) !== false) {
                     $d->getPagador()->setDda(true);
                 }
+                $ocorrencia = Util::appendStrings(
+                    $d->getOcorrenciaDescricao(),
+                    Arr::get($this->ocorrencias_liquidacao_baixa, $msgAdicional[0], ''),
+                    Arr::get($this->ocorrencias_liquidacao_baixa, $msgAdicional[1], ''),
+                    Arr::get($this->ocorrencias_liquidacao_baixa, $msgAdicional[2], ''),
+                    Arr::get($this->ocorrencias_liquidacao_baixa, $msgAdicional[3], ''),
+                    Arr::get($this->ocorrencias_liquidacao_baixa, $msgAdicional[4], '')
+                );
+                $d->setOcorrenciaDescricao($ocorrencia);
                 $d->setOcorrenciaTipo($d::OCORRENCIA_ENTRADA);
             } elseif ($d->hasOcorrencia('09')) {
                 $this->totais['baixados']++;
                 $ocorrencia = Util::appendStrings(
                     $d->getOcorrenciaDescricao(),
-                    Arr::get($this->rejeicoes, $msgAdicional[0], ''),
-                    Arr::get($this->rejeicoes, $msgAdicional[1], ''),
-                    Arr::get($this->rejeicoes, $msgAdicional[2], ''),
-                    Arr::get($this->rejeicoes, $msgAdicional[3], ''),
-                    Arr::get($this->rejeicoes, $msgAdicional[4], '')
+                    Arr::get($this->baixa_liquidacao, $msgAdicional[0], ''),
+                    Arr::get($this->baixa_liquidacao, $msgAdicional[1], ''),
+                    Arr::get($this->baixa_liquidacao, $msgAdicional[2], ''),
+                    Arr::get($this->baixa_liquidacao, $msgAdicional[3], ''),
+                    Arr::get($this->baixa_liquidacao, $msgAdicional[4], '')
                 );
                 $d->setOcorrenciaDescricao($ocorrencia);
                 $d->setOcorrenciaTipo($d::OCORRENCIA_BAIXADA);
@@ -343,11 +511,21 @@ class Bb extends AbstractRetorno implements RetornoCnab240
             } elseif ($d->hasOcorrencia('03', '26', '30')) {
                 $this->totais['erros']++;
                 $error = Util::appendStrings(
-                    Arr::get($this->rejeicoes, $msgAdicional[0], ''),
-                    Arr::get($this->rejeicoes, $msgAdicional[1], ''),
-                    Arr::get($this->rejeicoes, $msgAdicional[2], ''),
-                    Arr::get($this->rejeicoes, $msgAdicional[3], ''),
-                    Arr::get($this->rejeicoes, $msgAdicional[4], '')
+                    Arr::get($this->ocorrencias_descricao, $msgAdicional[0], ''),
+                    Arr::get($this->ocorrencias_descricao, $msgAdicional[1], ''),
+                    Arr::get($this->ocorrencias_descricao, $msgAdicional[2], ''),
+                    Arr::get($this->ocorrencias_descricao, $msgAdicional[3], ''),
+                    Arr::get($this->ocorrencias_descricao, $msgAdicional[4], '')
+                );
+                $d->setError($error);
+            } elseif ($d->hasOcorrencia('28')) {
+                $this->totais['custas']++;
+                $error = Util::appendStrings(
+                    Arr::get($this->ocorrencias_tarifas_custas, $msgAdicional[0], ''),
+                    Arr::get($this->ocorrencias_tarifas_custas, $msgAdicional[1], ''),
+                    Arr::get($this->ocorrencias_tarifas_custas, $msgAdicional[2], ''),
+                    Arr::get($this->ocorrencias_tarifas_custas, $msgAdicional[3], ''),
+                    Arr::get($this->ocorrencias_tarifas_custas, $msgAdicional[4], '')
                 );
                 $d->setError($error);
             } else {
