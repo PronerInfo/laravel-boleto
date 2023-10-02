@@ -370,9 +370,9 @@ class Pdf extends AbstractPdf implements PdfContract
             $pic = 'data://text/plain;base64,'. $img;
 
             $this->SetXY(112, 216);
-            $this->SetFont($this->PadraoFont, '', 6);
-            $this->Cell(60, $this->cell, "Pague via PIX", "", "", "L");
-            $this->Image($pic, 110,220,20,20,'png');
+            $this->SetFont($this->PadraoFont, 'B', 6);
+            $this->Cell(60, $this->cell-5, "    Pague via PIX", "", "", "L");
+            $this->Image($pic, 110,217,25,25,'png');
 
             $this->SetXY($xOriginal, $yOriginal);
         }
